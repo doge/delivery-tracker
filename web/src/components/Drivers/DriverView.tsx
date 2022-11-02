@@ -1,10 +1,11 @@
 import { 
     Container,
-    Row
+    Row,
+    Table
 } from 'react-bootstrap';
 
 import './Driver.scss';
-import DriverCard, { IDriver } from './Driver'
+import { IDriver } from './Driver'
 
 // Test data
 import { drivers } from '../../TestData';
@@ -15,26 +16,46 @@ export default function DriverView() {
         <>  
             <Container className="driver-container">
                 <Row>
-
-                        {drivers.map(({ name, phone_number, employment_date, active, 
-                        next_stop_index, deliveries, image_url }: IDriver, index) => {
-                            return (
-                                <DriverCard 
-                                    name={name}
-                                    phone_number={phone_number}
-                                    image_url={image_url}
-                                    employment_date={employment_date}
-                                    active={active}
-                                    next_stop_index={next_stop_index}
-                                    deliveries={deliveries}
-                                    key={index}
-                                />
-                            );
-                        })}
-
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Active</th>
+                                <th>Next Stop</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {drivers.map((driver: IDriver, index) => {
+                                return (
+                                    <tr>
+                                        <td>{driver.name}</td>
+                                        <td>{driver.phone_number}</td>
+                                        <td>{String(driver.active)}</td>
+                                        <td>{driver.deliveries[driver.next_stop_index].address}</td>
+                                        <td>{driver.next_stop_index + 1} / {driver.deliveries.length}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
                 </Row>
             </Container>
 
         </>
     );
 };
+
+/*
+
+<DriverCard 
+    name={name}
+    phone_number={phone_number}
+    image_url={image_url}
+    employment_date={employment_date}
+    active={active}
+    next_stop_index={next_stop_index}
+    deliveries={deliveries}
+    key={index}
+/>*/
