@@ -1,0 +1,42 @@
+$view_padding: 2.5rem;
+
+.view {
+    height: 100vh;
+}
+
+.row {
+    height: 100%;
+}
+
+.nav-title {
+    padding-bottom: .25rem;
+}
+
+.nav-menu {
+    padding: 2rem !important;
+}
+
+.nav-item:hover {
+    @extend .nav-item;
+}
+
+.col-sm-3 {
+    padding-right: 0px !important;
+}
+
+.col-sm-9 {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+// Icon alignment patch
+.link-icon {
+    padding-right: .25rem !important;
+}
+
+// Bootstrap override
+$primary: #343a40 !default;
+
+// bootstrap
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-icons/font/bootstrap-icons.scss';
