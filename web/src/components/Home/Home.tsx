@@ -36,27 +36,22 @@ const MenuItem : React.FC<MenuItemProps> = ({ label, route, icon }) => {
     );
 };  
 
-interface IHome {
-    active?: string;
-}
-
 export default function Home() {
 
     let location = useLocation();
-
-    React.useEffect(() => {
-
-    }, [location]);
+    React.useEffect(() => { }, [location]);
 
     // For example, we only want '/accounts' out of a route such as,
-    // '/accounts/<name>' as if we dont define the start of the route,
-    // our menu buttons won't be highlighted.
+    // '/accounts/<name>'. If we dont define the start of the route,
+    // and set it as the defaultActiveKey, our menu buttons won't be
+    // highlighted.
     const leftSideOfPath = `/${location.pathname.split('/', 2)[1]}`;
 
     // render
     return (
         <Container className="view" fluid>
             <Row>
+
                 <Col className="nav-menu" sm={3}>
                     <h5 className="nav-title">Home</h5>
                     <Nav className="flex-column menu" variant="pills" defaultActiveKey={leftSideOfPath} fill>
@@ -74,7 +69,8 @@ export default function Home() {
                     <Wrapper apiKey={`${(process.env.REACT_APP_GOOGLE_MAPS_API_KEY)}`}>
                         <Outlet />
                     </Wrapper>
-                </Col>  
+                </Col>
+
             </Row>
             <footer></footer>
         </Container>
