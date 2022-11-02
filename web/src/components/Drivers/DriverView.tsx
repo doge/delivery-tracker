@@ -12,6 +12,7 @@ import { drivers } from '../../TestData';
 
 export default function DriverView() {
 
+    // render
     return (
         <>  
             <Container className="driver-container">
@@ -46,16 +47,3 @@ export default function DriverView() {
         </>
     );
 };
-
-/*
-
-<DriverCard 
-    name={name}
-    phone_number={phone_number}
-    image_url={image_url}
-    employment_date={employment_date}
-    active={active}
-    next_stop_index={next_stop_index}
-    deliveries={deliveries}
-    key={index}
-/>*/

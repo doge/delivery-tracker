@@ -1,6 +1,11 @@
 import React from 'react';
 
+// styles
+import '../styles.scss';
+import './Home.scss';
+
 import { 
+    NavLink,
     Outlet,
     useLocation
 } from 'react-router-dom'; 
@@ -14,25 +19,19 @@ import {
 
 import { Wrapper } from '@googlemaps/react-wrapper';
 
-// styles
-import '../styles.scss';
-import './Home.scss';
-
 interface MenuItemProps {
     label: string;
     route: string;
     icon?: string;
 }
 
-const MenuItem : React.FC<MenuItemProps> = ({ label, route, icon }) => {
+const MenuItem : React.FC<MenuItemProps> = (props: MenuItemProps) => {
         return (
-        <> 
-            <Nav.Item style={{textAlign: "left"}}>
-                <Nav.Link href={route}> 
-                    <i className={icon}/> {label}
-                </Nav.Link>
-            </Nav.Item>
-        </>
+            <NavLink 
+                to={ props.route }
+                className={({isActive}) => isActive ? "nav-link active" : "nav-link"} > 
+                <i className={ props.icon }/> { props.label }
+            </NavLink>
     );
 };  
 
