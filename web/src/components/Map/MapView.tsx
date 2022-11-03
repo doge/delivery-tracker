@@ -20,7 +20,7 @@ import {
     useJsApiLoader,
     MarkerF,
     InfoWindowF,
-    DirectionsRenderer,
+    Autocomplete,
     PolylineF
 } from '@react-google-maps/api';
 
@@ -34,9 +34,9 @@ import {
 import { IDriver } from '../Drivers/Driver';
 
 export default function MapView() {
-
     const { isLoaded, loadError } = useJsApiLoader({
-        googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+        googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`,
+        libraries: ['places']
     }) 
 
     // Map starting position
@@ -155,15 +155,19 @@ export default function MapView() {
                 </DropdownButton>
 
                     <div className="map-controls">
-                        <Card style={{ width: 'auto'}}>
+                        <Card style={{ width: '100%'}}>
                             <Card.Body>
                                 <Form>
                                     <Row>
                                         <Col lg={4} sm={4} xs={4} >
-                                            <Form.Control placeholder="Origin" ref={origin} />
+                                            <Autocomplete>
+                                                <Form.Control placeholder="Origin" ref={origin} />
+                                            </Autocomplete>
                                         </Col>
                                         <Col lg={4} sm={4} xs={4} >
-                                            <Form.Control placeholder="Destination" ref={destination} />
+                                            <Autocomplete>
+                                                <Form.Control placeholder="Destination" ref={destination} />
+                                            </Autocomplete>
                                         </Col>  
                                         <Col lg={4} sm={4} xs={4}>
                                             <Button variant="primary" style={{width: '100%'}} onClick={() => {
