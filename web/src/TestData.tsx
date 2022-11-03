@@ -1,6 +1,7 @@
 // Data used to test various views
 
-import { Driver, Delivery } from "./components/Drivers/Driver";
+import { Driver } from "./models/Driver";
+import { Delivery } from "./models/Delivery";
 
 export const deliveries: Delivery[] = [
     new Delivery("Aldway Hayleye", "123 Sesame Street, New York, New York", 0, false, new Date(), "12:30pm"),

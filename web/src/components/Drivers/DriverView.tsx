@@ -5,7 +5,7 @@ import {
 } from 'react-bootstrap';
 
 import './Driver.scss';
-import { IDriver } from './Driver'
+import { IDriver } from '../../models/Driver'
 
 // Test data
 import { drivers } from '../../TestData';

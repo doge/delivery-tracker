@@ -31,7 +31,7 @@ import {
     coordinates
 } from '../../TestData';
 
-import { IDriver } from '../Drivers/Driver';
+import { IDriver } from '../../models/Driver';
 
 export default function MapView() {
     const { isLoaded, loadError } = useJsApiLoader({

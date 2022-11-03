@@ -1,4 +1,4 @@
-import { IDriver } from '../Drivers/Driver';
+import { IDriver } from '../../models/Driver';
 
 import { 
     Container,
