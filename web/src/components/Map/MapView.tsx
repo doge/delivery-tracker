@@ -19,7 +19,9 @@ import {
     GoogleMap,
     useJsApiLoader,
     MarkerF,
-    InfoWindowF
+    InfoWindowF,
+    DirectionsRenderer,
+    PolylineF
 } from '@react-google-maps/api';
 
 import MarkerView from '../Marker/MarkerView';
@@ -43,11 +45,16 @@ export default function MapView() {
         lng: 0
     });
 
+    // State
     const [ clicks, setClicks ] = React.useState<google.maps.LatLng[]>([]);
     const [ zoom, setZoom ] = React.useState(12); // initial zoom
     const [ map, setMap ] = React.useState<google.maps.Map>();
     const [ loadedLocation, setLoadedLocation ] = React.useState(false);
     const [ activeMarker, setActiveMarker ] = React.useState<number>();
+    const [ route, setRoute ] = React.useState<any>();
+
+    const origin = React.useRef(null);
+    const destination = React.useRef(null);
 
     React.useEffect(() => {
         // Let's check if geolocation is enabled
@@ -63,7 +70,7 @@ export default function MapView() {
 
                 console.log("Current position found and loaded!");
             }, (error) => {
-                console.log(error);
+                console.error(error);
             }, {enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
         }
     }, []);
@@ -73,6 +80,31 @@ export default function MapView() {
         return <Spinner animation="border"/>
     } else if(loadError) {
         return <Container>MapView could not be rendered</Container>
+    }
+
+    function calculateDirections(origin: string, destination:string, waypoints?: []) {
+        // Calculate the directions from the Maps api
+
+        const directionsService = new google.maps.DirectionsService();
+        directionsService.route({
+            origin: origin,
+            destination: destination,
+            waypoints: waypoints,
+            optimizeWaypoints: true,
+            travelMode: google.maps.TravelMode.DRIVING
+        }, (result, status) => {
+            if(result) {
+                if(status == google.maps.DirectionsStatus.OK) {
+                    setRoute(result);
+                }
+            } else {
+                console.error(result);
+            }
+        });
+    }
+
+    function clearDirections() {
+        setRoute(null);
     }
 
     // Testing custom icons...
@@ -123,17 +155,36 @@ export default function MapView() {
                 </DropdownButton>
 
                     <div className="map-controls">
-                        <Card style={{ width: '24rem'}}>
+                        <Card style={{ width: 'auto'}}>
                             <Card.Body>
                                 <Form>
                                     <Row>
-                                        <Col lg={8} sm={8} xs={8} >
-                                            <Form.Control></Form.Control>
+                                        <Col lg={4} sm={4} xs={4} >
+                                            <Form.Control placeholder="Origin" ref={origin} />
                                         </Col>
-                                        <Col>
+                                        <Col lg={4} sm={4} xs={4} >
+                                            <Form.Control placeholder="Destination" ref={destination} />
+                                        </Col>  
+                                        <Col lg={4} sm={4} xs={4}>
                                             <Button variant="primary" style={{width: '100%'}} onClick={() => {
-                                                console.log("click");
-                                            }}>Add Stop</Button>
+
+                                                // Make sure our variables are reset
+                                                clearDirections();
+                                                
+                                                // Check the user filled out the text boxes
+                                                if(origin.current && destination.current) {
+                                                    const originValue = origin.current['value'];
+                                                    const destinationValue = destination.current['value'];
+
+                                                    if(!originValue || !destinationValue) {
+                                                        console.log("origin & destination not supplied");
+                                                        return;
+                                                    }
+
+                                                    calculateDirections(originValue, destinationValue);
+                                                }
+
+                                            }}>Route</Button>
                                         </Col>
                                     </Row>
                                 </Form>
@@ -176,7 +227,16 @@ export default function MapView() {
                         </MarkerF>
                         
                     );
-                })}
+                })}    
+
+
+            {route && <PolylineF 
+                        path={ route.routes[0].overview_path }
+                        options={{
+                            strokeColor: "blue",
+                            strokeOpacity: 1.0,
+                            strokeWeight: 5
+                        }}/>}
 
             </GoogleMap>
         </div>
