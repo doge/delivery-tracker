@@ -1,4 +1,28 @@
 .map {
     height: 100%;
     padding-right: 0px !important;
+    z-index: -1;
+    position: relative;
+}
+
+.map-view {
+    position: absolute;
+    display: grid;
+    z-index: 1;
+    float: right;
+    pointer-events: none;   
+}
+
+.map-dropdown-btn {
+    pointer-events: auto;
+    position: absolute;
+    bottom: -96vh;
+    margin-left: 2rem;
+}
+
+.map-controls {
+    position: absolute;
+    pointer-events: auto;
+    justify-self: center;
+    margin-top: 2rem;
 }

@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/home",
-            element: <MapView className="map" />
+            element: <MapView />
           }
         ]
     },

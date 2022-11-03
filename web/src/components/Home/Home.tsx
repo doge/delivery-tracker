@@ -17,8 +17,6 @@ import {
     Nav
 } from 'react-bootstrap';
 
-import { Wrapper } from '@googlemaps/react-wrapper';
-
 interface MenuItemProps {
     label: string;
     route: string;
@@ -65,13 +63,10 @@ export default function Home() {
                 </Col>
                 
                 <Col sm={9}>
-                    <Wrapper apiKey={`${(process.env.REACT_APP_GOOGLE_MAPS_API_KEY)}`}>
-                        <Outlet />
-                    </Wrapper>
+                    <Outlet />
                 </Col>
 
             </Row>
-            <footer></footer>
         </Container>
     );
 };
